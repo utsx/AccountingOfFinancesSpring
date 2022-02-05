@@ -17,6 +17,8 @@ public class User {
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+    @OneToOne
+    private Finances finances;
 
     public User(){
     }
@@ -27,11 +29,8 @@ public class User {
         this.firstName = firstName;
         this.secondName = secondName;
         this.birthdayDate = birthdayDate;
-        if(password.length() < 8)
-        {
-            throw new Invalid
-        }
         this.password = password;
+        this.finances = new Finances();
     }
 
 
