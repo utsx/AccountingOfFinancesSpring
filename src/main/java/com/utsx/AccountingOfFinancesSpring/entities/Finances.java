@@ -3,6 +3,7 @@ package com.utsx.AccountingOfFinancesSpring.entities;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Finances {
@@ -10,8 +11,8 @@ public class Finances {
     private Long id;
     @OneToOne
     private User user;
-    @OneToMany
-    private HashSet<Category> categories;
+    @OneToMany(mappedBy = "finances")
+    private Set<Category> categories;
 
     public Finances() {
     }

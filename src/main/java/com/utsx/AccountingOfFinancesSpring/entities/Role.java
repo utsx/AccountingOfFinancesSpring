@@ -2,6 +2,7 @@ package com.utsx.AccountingOfFinancesSpring.entities;
 
 import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @Value("${some.key:0}")
     private Long id;
@@ -36,4 +37,8 @@ public class Role {
         this.id = id;
     }
 
+    @Override
+    public String getAuthority() {
+        return getRoleName();
+    }
 }

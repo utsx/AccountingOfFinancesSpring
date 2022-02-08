@@ -10,6 +10,7 @@ public class Category {
     private String categoryName;
     private Long totalAmount;
     @ManyToOne
+    @JoinColumn(name = "finance_id")
     private Finances finances;
 
     public Category(){
