@@ -18,50 +18,91 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String login;
+    private String email;
     private String firstName;
-    private String secondName;
-    private Date birthdayDate;
+    private String lastName;
     @Size(min = 8, message = "Your password short")
     private String password;
-    @Size(min = 8, message = "Your password short")
+    @Transient
+    private boolean isActive;
     private String passwordConfirm;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
-    @OneToOne
-    private Finances finances;
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
+    //@OneToOne
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
+    public Long getId() {
+        return id;
     }
 
-    @Override
-    public String getUsername() {
-        return login;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
+    public String getEmail() {
+        return email;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
+    public String getFirstName() {
+        return firstName;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+    //private Finances finances;
+
 }

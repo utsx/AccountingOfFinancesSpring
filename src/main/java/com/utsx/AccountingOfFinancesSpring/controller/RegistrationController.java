@@ -16,16 +16,15 @@ import javax.validation.Valid;
 
 @Controller
 public class RegistrationController {
-
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping("/reg")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
+
         return "reg";
     }
-
 
     @PostMapping("/reg")
     public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {

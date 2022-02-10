@@ -18,6 +18,14 @@
                    autofocus="true">
             <span class="has-error" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
         </div>
+        <div class="form-group">
+            <input type="firstName" th:field="*{firstName}" class="form-control"
+                   placeholder="Enter you firstName">
+        </div>
+        <div class="form-group">
+            <input type="secondName" th:field="*{secondName}" class="form-control"
+                   placeholder="Enter you second name">
+        </div>
 
         <div class="form-group">
             <input type="password" th:field="*{password}" class="form-control" placeholder="Password">

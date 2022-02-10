@@ -7,5 +7,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Optional;
 
 public interface UserRepo extends PagingAndSortingRepository<User, Long> {
-    Optional<User> findUserByLogin(String login);
+    User findUserByEmail(String login);
 }

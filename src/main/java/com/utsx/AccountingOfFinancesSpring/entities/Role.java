@@ -1,44 +1,36 @@
 package com.utsx.AccountingOfFinancesSpring.entities;
 
-import net.bytebuddy.implementation.bind.annotation.Default;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.GrantedAuthority;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.ArrayList;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
-public class Role implements GrantedAuthority {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Role {
     @Id
-    @Value("${some.key:0}")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String roleName;
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
 
-    public Role(){
-    }
+    private String name;
 
-    public Role(final Set<User> users)
-    {
-        this.users = users;
-        this.roleName = "USER";
-    }
+    @ManyToMany
+    private Collection<User> users;
 
-    public String getRoleName() {
-        return roleName;
-    }
+    @ManyToMany
+    @JoinTable(
+            name = "roles_privileges",
+            joinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "privilege_id", referencedColumnName = "id"))
+    private Collection<Privilege> privileges;
 
-    public void setRoleNameAndId(String roleName, Long id) {
-        this.roleName = roleName;
-        this.id = id;
-    }
-
-    @Override
-    public String getAuthority() {
-        return getRoleName();
+    public Role(String name) {
+        this.name = name;
     }
 }
